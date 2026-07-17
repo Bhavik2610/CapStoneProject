@@ -1,0 +1,25 @@
+=====================================================================
+ TASK 4 — What is CI/CD?
+=====================================================================
+
+CI/CD stands for Continuous Integration and Continuous Deployment (or
+Delivery). Continuous Integration means every code change you push is
+automatically built and tested, so problems are caught early instead of
+piling up. Continuous Deployment means that once those checks pass, the
+new version is automatically published to your live site without manual
+steps. Together they turn "make a change -> deploy" into an automated,
+repeatable pipeline.
+
+Two ways CI/CD helps manage future updates to a deployed React app:
+
+1. Automatic deploys on every push. With Netlify or Vercel connected to
+   your GitHub repo, merging to the main branch rebuilds and redeploys
+   the site automatically — no manual `firebase deploy` each time.
+
+2. Catching bugs before they go live. The pipeline can run your build
+   and tests (and even Lighthouse checks) on every pull request, so a
+   broken change is flagged before it ever reaches real users. Many
+   hosts also give per-branch "preview" URLs so you can review a change
+   in isolation before it ships.
+
+=====================================================================

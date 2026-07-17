@@ -1,0 +1,11 @@
+# Netlify picks this up automatically — no dashboard config needed.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: send all routes to index.html so refreshing a deep link
+# doesn't 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

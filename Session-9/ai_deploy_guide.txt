@@ -1,0 +1,55 @@
+=====================================================================
+ TASK 5 — AI-generated deployment guide (Netlify & Firebase)
+=====================================================================
+
+------------------------- PROMPT USED --------------------------------
+
+Give me a step-by-step guide to deploy a Vite React app to (a) Netlify
+and (b) Firebase Hosting, including the build settings and the commands.
+
+--------------------- GUIDE: NETLIFY ---------------------------------
+
+Option A — drag & drop (fastest):
+  1. Run `npm run build` locally. This creates a `dist` folder.
+  2. Go to app.netlify.com -> "Add new site" -> "Deploy manually".
+  3. Drag the `dist` folder onto the page. Done — you get a live URL.
+
+Option B — connect a Git repo (auto-deploys on every push):
+  1. Push the project to GitHub.
+  2. Netlify -> "Add new site" -> "Import an existing project" -> GitHub.
+  3. Set Build command: `npm run build`, Publish directory: `dist`.
+     (The included netlify.toml already sets these automatically.)
+  4. Deploy. Netlify rebuilds every time you push to the main branch.
+
+--------------------- GUIDE: FIREBASE HOSTING ------------------------
+
+  1. Install the CLI once:  `npm install -g firebase-tools`
+  2. Log in:               `firebase login`
+  3. Build the app:        `npm run build`   (creates `dist`)
+  4. Initialize hosting:   `firebase init hosting`
+       - "Use an existing project" -> pick your project
+       - Public directory:  dist          <-- IMPORTANT, not "public"
+       - Single-page app (rewrite to /index.html):  Yes
+       - Overwrite index.html:  No
+  5. Deploy:               `firebase deploy --only hosting`
+       -> prints a live URL like https://your-app.web.app
+
+------------------- STEPS THAT COMMONLY DON'T WORK -------------------
+
+- Firebase asks for the public directory and defaults to "public".
+  A Vite app builds to "dist", so accepting the default deploys an
+  empty site (blank page or 404). Fix: type `dist`.
+
+- Forgetting to answer "Yes" to the single-page-app rewrite means deep
+  links / refreshes 404. The included firebase.json already has the
+  rewrite, so you can skip that prompt if you keep the file.
+
+- `firebase: command not found` means the CLI global install didn't go
+  onto your PATH. Re-run the npm install -g, or use `npx firebase ...`.
+
+- On Netlify, setting the publish directory to the project root instead
+  of `dist` serves your source files, not the build. Use `dist`.
+
+=====================================================================
+This guide was generated with AI assistance; verify against current docs.
+=====================================================================
