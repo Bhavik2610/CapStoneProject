@@ -1,0 +1,59 @@
+=====================================================================
+ TASK 5 — Improving the app from a Lighthouse report
+=====================================================================
+
+------------------------- PROMPT TO USE ------------------------------
+
+Suggest improvements for my React (Next.js) app based on this Lighthouse
+performance report: [paste your Lighthouse summary here].
+
+------------- TYPICAL SUGGESTIONS FOR THIS KIND OF APP ---------------
+
+1. Serve images in next-gen formats / properly size images.
+   -> The playlist pages used <img> with external Picsum photos and no
+      width/height, which causes layout shift (CLS) and oversized loads.
+
+2. Eliminate render-blocking resources / reduce unused CSS.
+   -> CSS Modules already scope styles per component, so unused CSS is
+      minimal. Keeping global CSS small helps first paint.
+
+3. Add a meta description and a document title (SEO / best practices).
+
+4. Ensure text has sufficient color contrast.
+   -> Very light grey text (#b3b3b3) on dark backgrounds can fail; use
+      readable values (e.g. #444 on light, #cfd6e4 on dark).
+
+5. Avoid large layout shifts (CLS).
+   -> Give media explicit dimensions so the browser reserves space.
+
+6. Use next/link for internal navigation instead of <a> full reloads.
+
+------------------- WHAT I ACTUALLY CHANGED --------------------------
+
+Chosen suggestions: #1, #3, and #6, on the homepage.
+
+- Replaced external <img> tiles on the homepage with CSS gradient tiles.
+  Result: zero image downloads and zero layout shift on the homepage
+  (better LCP + CLS).
+
+- Added <Head> with a <title> and <meta name="description">.
+  Result: passes the "document has a meta description" / title audits.
+
+- Switched homepage navigation to next/link.
+  Result: client-side transitions instead of full page reloads.
+
+- (Bonus) Added responsive @media breakpoints so the layout adapts to
+  mobile/tablet/desktop without horizontal scrolling.
+
+--------------------------- HOW TO VERIFY ----------------------------
+
+1. Run Lighthouse on http://localhost:3000/ (Performance, mobile).
+2. Note the score and the "Opportunities" / "Diagnostics" list.
+3. Compare against a page that still uses external images, e.g.
+   /playlists-db, to see the image-related opportunities appear there.
+
+NOTE: For a fully accurate Performance score, run Lighthouse against a
+PRODUCTION build (npm run build && npm run start), not the dev server —
+dev mode is intentionally unoptimized and scores lower.
+
+
