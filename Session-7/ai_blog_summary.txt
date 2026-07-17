@@ -1,0 +1,56 @@
+=====================================================================
+ TASK 4 — AI-assisted fetchBlogSummary(prompt)
+=====================================================================
+
+------------------------- PROMPT USED --------------------------------
+
+Write a JavaScript function fetchBlogSummary(prompt) that takes user
+input and returns a blog summary using the OpenAI API. Use async/await
+and handle errors.
+
+------------------ WHAT CHATGPT TYPICALLY GENERATES ------------------
+
+// NOTE: this version calls OpenAI DIRECTLY from the client and puts the
+// API key in the browser — which is INSECURE. Shown here only to
+// contrast with the secure version below.
+async function fetchBlogSummary(prompt) {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`, // <-- exposed to everyone!
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: `Summarize this blog topic: ${prompt}` }],
+    }),
+  });
+  const data = await res.json();
+  return data.choices[0].message.content;
+}
+
+------------------ SECURE VERSION USED IN THE PROJECT ----------------
+
+// src/lib/ai.js — calls our own API route instead, so the key stays
+// server-side (src/pages/api/blog-summary.js).
+export async function fetchBlogSummary(prompt) {
+  const res = await fetch("/api/blog-summary", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error ?? "Failed to fetch blog summary.");
+  return data.summary;
+}
+
+--------------------- TESTED WITH TWO PROMPTS ------------------------
+
+Prompt 1: "the benefits of remote work"
+Prompt 2: "why learning to cook saves money"
+
+Both return a short summary paragraph in the Blog Summary box at /ai.
+
+=====================================================================
+This function was generated with AI assistance and adapted for security.
+=====================================================================

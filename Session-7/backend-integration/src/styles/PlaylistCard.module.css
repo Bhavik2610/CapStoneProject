@@ -1,0 +1,40 @@
+.card {
+  width: 200px;
+  background: #181818;
+  border-radius: 12px;
+  padding: 14px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: #282828;
+  transform: translateY(-3px);
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.body {
+  margin-top: 12px;
+}
+
+.name {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: #b3b3b3;
+}
